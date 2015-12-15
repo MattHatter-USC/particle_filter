@@ -15,7 +15,7 @@ Visualizer* Visualizer::getInstance()
 
 void Visualizer::init()
 {
-  marker_pub_ = nh_.advertise<visualization_msgs::Marker>("visualizion_marker", 10);
+  marker_pub_ = nh_.advertise<visualization_msgs::Marker>("visualize", 10);
   model_pub_ = nh_.advertise<articulation_model_msgs::ModelMsg>("model_track", 10);
   particles_pub_ = nh_.advertise<articulation_model_msgs::ParticlesMsg>("model_particles", 10);
 
@@ -175,5 +175,6 @@ void Visualizer::publishPoints(const std::vector <Eigen::VectorXd> &points, cons
 
     marker_points.points.push_back(p);
   }
+  ROS_ERROR_STREAM("Publishing Points!");
   marker_pub_.publish(marker_points);
 }

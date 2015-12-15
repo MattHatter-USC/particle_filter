@@ -647,7 +647,7 @@ template <class ParticleType> bool ParticleFilter<ParticleType>::stratifiedResam
       ++idx;
     }
     new_particles.push_back(particles[idx]);
-    new_particles.back().weight = 1.0 / particles_number;
+    new_particles.back().weight = 1.0 / (double)particles_number;
     random_double += 1.0/(double)particles_number;
   }
   particles = new_particles;
@@ -675,6 +675,7 @@ template <class ParticleType> bool ParticleFilter<ParticleType>::resample(const 
   {
     double random_double = Random::uniform(0.0, 1.0);
     int idx = 0;
+    //for (std::vector<double>::iterator it : cumultative_weights) {
     for (typename std::vector <double>::iterator it = cumultative_weights.begin(); it != cumultative_weights.end();
          ++it, ++idx)
     {
