@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 """
 usage: %(progname)s [--obs] [--tracks]
@@ -76,7 +75,6 @@ class modelVisualizer:
       marker_array.markers.append(marker_arrow)
 
     self.pub_array.publish(marker_array)
-
 
   def callbackAction(self, actions_msg):
 

@@ -29,6 +29,7 @@ public:
   bool stopped;
   uint stopped_counter;
   tf::Vector3 action_direction;
+  tf::Vector3 result_vector;
   ros::Publisher vector_pub;
   ros::Subscriber effort_exceeded_sub;
 

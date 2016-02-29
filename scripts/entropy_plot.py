@@ -23,9 +23,9 @@ ran_err = [0.0443342644, 0.1390013777, 0.1290776394, 0.0629977619, 0.0285690042,
 
 # First illustrate basic pyplot interface, using defaults where possible.
 plt.figure()
-plt.errorbar(x, kld, yerr=kld_err, fmt='-o', capthick=2, ls="solid", label = "KLD")
-plt.errorbar(x, entr, yerr=entr_err, fmt='-o', capthick=2, ls="dotted", label = "Min. Entropy")
-plt.errorbar(x, ran, yerr=ran_err, fmt='-o', capthick=2, ls="dashed", label = "Random")
+plt.errorbar(x, kld, yerr=kld_err, fmt='-o', mew=2, ls="solid", label = "KLD")
+plt.errorbar(x, entr, yerr=entr_err, fmt='-o', mew=2, ls="dotted", label = "Min. Entropy")
+plt.errorbar(x, ran, yerr=ran_err, fmt='-o', mew=2, ls="dashed", label = "Random")
 plt.xlim(-0.5,7.5)
 plt.ylabel(r'Entropy')
 plt.xlabel(r'Push number')

@@ -77,8 +77,15 @@ bool Action::execute(tf::Vector3& direction, const std::string& marker_tf, const
 //  moveit::planning_interface::MoveGroup::Plan my_plan;
 //  bool success = group.plan(my_plan);
   bool success = group.move();
-  sleep(3.0);
+  geometry_msgs::PoseStamped result_pose = group.getCurrentPose();
+  result_vector.setX(result_pose.pose.position.x);
+  result_vector.setY(result_pose.pose.position.y);
+  result_vector.setZ(result_pose.pose.position.z);
+  result_vector /= distance; //scale appropriately
+  //are freaking geometry_msgs::Point and Vector3 actually separate non-interoperable classes?
 
+  sleep(3.0);
+  
   group.setPoseTarget(current_pose);
   bool back_success = group.move();
 

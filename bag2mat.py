@@ -191,6 +191,8 @@ class Bag2Mat:
                     viz_data = []
 		    seen = [False]*9
                     for mark in curr_msg.markers:
+			if (mark.id == 255):
+				continue
                         id_data.append(mark.id)
 			seen[mark.id] = True
 			viz_data.append(True)
@@ -258,7 +260,7 @@ if __name__ == '__main__':
     try:
 	seg_num
     except NameError:
-	seg_num = 5
+	seg_num = sys.argv[2]
     basename = 'data/bagfiles'
     demofile = basename + '/part' + str(seg_num) + '.bag'
     picklefile = basename + '/Pickle' + str(seg_num) + '.txt'

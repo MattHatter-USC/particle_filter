@@ -7,7 +7,7 @@
 template <class StateType, class ZType, class AType> ArtManipPoseSensorActionModel<StateType, ZType, AType>::ArtManipPoseSensorActionModel()
 {
   distance_threshold = 0.07;
-  angle_threshold = 20 * M_PI/180;
+  angle_threshold = 20 * M_PI/180.0;
 }
 
 template <class StateType, class ZType, class AType> ArtManipPoseSensorActionModel<StateType, ZType, AType>::~ArtManipPoseSensorActionModel()
