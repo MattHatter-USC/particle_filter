@@ -56,17 +56,17 @@ if __name__ == '__main__':
         rospy.init_node('ExtractMarkersNode')
 
         #Setup utilities and world model
-        #gen_utils = generalUtils.GeneralUtils()
+        gen_utils = generalUtils.GeneralUtils()
         traj_utils = trajUtils.TrajUtils()
         draw_utils = drawUtils.DrawUtils()
-        #wm = arWorldModel.ARWorldModel()
-        print "hello" 
-	#rar
-	marker_ids = []
+        wm = arWorldModel.ARWorldModel()
+        #print "hello" 
+
+	    marker_ids = []
         if (len(sys.argv) >= 3):
             skill_id = int(sys.argv[1])
             for id in sys.argv[2:]:
-              marker_ids.append(id)
+                marker_ids.append(id)
         else:
             print "\nAborting! Wrong number of command line args"
             print "Usage: python extractMarkers <skill_id> <marker_id> <marker_id> <marker_id> ..."

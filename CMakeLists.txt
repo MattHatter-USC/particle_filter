@@ -92,7 +92,7 @@ find_library(GSLCBLAS_LIBRARY NAMES gslcblas
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES particle_filter
+  LIBRARIES particle_filter_LIBRARY
 #  CATKIN_DEPENDS other_catkin_pkg
   DEPENDS eigen
 )
@@ -112,9 +112,25 @@ include_directories(
 )
 
 ## Declare a cpp library
-# add_library(particle_filter
-#   src/${PROJECT_NAME}/particle_filter.cpp
-# )
+ add_library(particle_filter_LIBRARY
+   src/particle_filter.cpp
+   src/articulation_model.cpp
+   src/free_model.cpp
+   src/prismatic_model.cpp
+   src/particle.cpp
+   src/rotational_model.cpp
+   src/motion_model.cpp
+   src/handle_finder.cpp
+   src/articulation_data_sensormodel.cpp
+   src/articulation_manip_pose_sensoractionmodel.cpp
+   src/articulation_manip_sensor_action_model.cpp
+   src/articulation_marker_sensormodel.cpp
+   src/rigid_model.cpp
+   src/sensor_action_model.cpp
+   src/sensor_model.cpp
+   src/random.cpp
+   src/action.cpp
+ )
 
 ## Declare a cpp executable
 add_executable(particle_filter_node src/main.cpp src/particle.cpp src/particle_filter.cpp src/motion_model.cpp src/sensor_model.cpp src/random.cpp src/identity_motionmodel.cpp src/visualizer.cpp src/gaussian_sensormodel.cpp src/free_model.cpp src/articulation_model.cpp src/rigid_model.cpp src/rotational_model.cpp src/prismatic_model.cpp src/articulation_marker_sensormodel.cpp src/articulation_data_sensormodel.cpp src/sensor_action_model.cpp src/articulation_manip_sensor_action_model.cpp src/articulation_manip_pose_sensoractionmodel.cpp src/handle_finder.cpp src/action.cpp src/action_generator.cpp)
@@ -125,6 +141,7 @@ add_executable(main_static src/main_static.cpp src/particle.cpp src/particle_fil
 
 add_executable(main_matt src/main_matt.cpp src/particle.cpp src/particle_filter.cpp src/motion_model.cpp src/sensor_model.cpp src/random.cpp src/identity_motionmodel.cpp src/visualizer.cpp src/gaussian_sensormodel.cpp src/free_model.cpp src/articulation_model.cpp src/rigid_model.cpp src/rotational_model.cpp src/prismatic_model.cpp src/articulation_marker_sensormodel.cpp src/articulation_data_sensormodel.cpp src/sensor_action_model.cpp src/articulation_manip_sensor_action_model.cpp src/articulation_manip_pose_sensoractionmodel.cpp src/handle_finder.cpp src/action.cpp src/action_generator.cpp)
 
+add_executable(main_general src/main_general.cpp src/particle.cpp src/particle_filter.cpp src/motion_model.cpp src/sensor_model.cpp src/random.cpp src/identity_motionmodel.cpp src/visualizer.cpp src/gaussian_sensormodel.cpp src/free_model.cpp src/articulation_model.cpp src/rigid_model.cpp src/rotational_model.cpp src/prismatic_model.cpp src/articulation_marker_sensormodel.cpp src/articulation_data_sensormodel.cpp src/sensor_action_model.cpp src/articulation_manip_sensor_action_model.cpp src/articulation_manip_pose_sensoractionmodel.cpp src/handle_finder.cpp src/action.cpp src/action_generator.cpp)
 
 add_executable(articulation_testing_node src/model_test.cpp src/free_model.cpp src/articulation_model.cpp src/rigid_model.cpp src/rotational_model.cpp src/prismatic_model.cpp)
 
@@ -133,6 +150,7 @@ add_dependencies(articulation_particles articulation_model_msgs_generate_message
 add_dependencies(articulation_testing_node articulation_model_msgs_generate_messages_cpp)
 add_dependencies(main_static articulation_model_msgs_generate_messages_cpp)
 add_dependencies(main_matt articulation_model_msgs_generate_messages_cpp)
+add_dependencies(main_general articulation_model_msgs_generate_messages_cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -145,6 +163,13 @@ target_link_libraries(particle_filter_node
    ${GSL_LIBRARY}
    ${GSLCBLAS_LIBRARY}
 )
+
+target_link_libraries(particle_filter_LIBRARY
+   ${catkin_LIBRARIES}
+   ${GSL_LIBRARY}
+   ${GSLCBLAS_LIBRARY}
+)
+
 
 target_link_libraries(articulation_particles
    ${catkin_LIBRARIES}
@@ -170,6 +195,11 @@ target_link_libraries(main_matt
    ${GSLCBLAS_LIBRARY}
 )
 
+target_link_libraries(main_general
+   ${catkin_LIBRARIES}
+   ${GSL_LIBRARY}
+   ${GSLCBLAS_LIBRARY}
+)
 
 #############
 ## Install ##
@@ -193,11 +223,11 @@ target_link_libraries(main_matt
 # )
 
 ## Mark cpp header files for installation
-# install(DIRECTORY include/${PROJECT_NAME}/
-#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+ install(DIRECTORY include/${PROJECT_NAME}/
+   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 #   FILES_MATCHING PATTERN "*.h"
 #   PATTERN ".svn" EXCLUDE
-# )
+ )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
 # install(FILES

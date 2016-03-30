@@ -11,6 +11,7 @@ Action::Action():
 
 Action::~Action()
 {
+    
 }
 
 void Action::effortCB(const std_msgs::BoolConstPtr& msg)
@@ -71,18 +72,34 @@ bool Action::execute(tf::Vector3& direction, const std::string& marker_tf, const
   pull_pose.pose.position.x += direction.getX()*distance;
   pull_pose.pose.position.y += direction.getY()*distance;
   pull_pose.pose.position.z += direction.getZ()*distance;
-
-
+  
+  //=======
+  double looseness = 0.2;
+  double tolerance = group.getGoalOrientationTolerance();
+  if (both_ways) {
+    group.setGoalOrientationTolerance(looseness);
+  }
+  //=======
+  
   group.setPoseTarget(pull_pose);
+  
 //  moveit::planning_interface::MoveGroup::Plan my_plan;
 //  bool success = group.plan(my_plan);
   bool success = group.move();
+  
+  //using "both_ways" to also indicate that we want to loosen the hand,
+  //in the future use a dedicated param
+  //=======
+  if (both_ways) {
+    group.setGoalOrientationTolerance(tolerance);
+  }
+  //=======
+  
   geometry_msgs::PoseStamped result_pose = group.getCurrentPose();
   result_vector.setX(result_pose.pose.position.x);
   result_vector.setY(result_pose.pose.position.y);
   result_vector.setZ(result_pose.pose.position.z);
   result_vector /= distance; //scale appropriately
-  //are freaking geometry_msgs::Point and Vector3 actually separate non-interoperable classes?
 
   sleep(3.0);
   
@@ -95,9 +112,17 @@ bool Action::execute(tf::Vector3& direction, const std::string& marker_tf, const
     push_pose.pose.position.x -= direction.getX()*distance;
     push_pose.pose.position.y -= direction.getY()*distance;
     push_pose.pose.position.z -= direction.getZ()*distance;
-
+    
+    //=======
+    group.setGoalOrientationTolerance(looseness);
+    //=======
+    
     group.setPoseTarget(push_pose);
     group.move();
+
+    //=======
+    group.setGoalOrientationTolerance(tolerance);
+    //=======
 
     group.setPoseTarget(current_pose);
     group.move();
